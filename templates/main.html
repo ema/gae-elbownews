@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>Elbow News</title>
+    <link rel="stylesheet" href="/static/main.css" media="screen" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.elbownews.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("body").elbownews({ 
+                'onClass': 'active', 
+                'offClass': 'inactive' 
+            });
+        });
+    </script>
+</head>
+
+<body>
+<h1>Elbow News</h1>
+
+<div id="main">
+    {% for entry in entries %}
+    <div class="entry" id="{{ forloop.counter }}">
+        <h2><a href="{{ entry.link }}">{{ entry.title }}</a></h2>
+        <h3>Source: {{ entry.source }}</h2>
+        <h3>{{ entry.date }}</h3>
+        <p> {{ entry.description|safe }} </p>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+
+</html>
