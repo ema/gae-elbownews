@@ -19,6 +19,8 @@
 <h1>Elbow News</h1>
 
 <div id="main">
+    <div id="messages">&nbsp;</div>
+
     {% for entry in entries %}
     <div class="entry" id="{{ forloop.counter }}">
         <h2><a href="{{ entry.link }}">{{ entry.title }}</a></h2>

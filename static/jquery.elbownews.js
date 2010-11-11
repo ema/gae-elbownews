@@ -8,7 +8,7 @@
 
         var keepChanging = true;
         // in seconds
-        var changeTimeout = 3;
+        var changeTimeout = 10;
 
         // to keep track of the number of links and input elements
         var maxId = 1;
@@ -28,6 +28,46 @@
             $(oldElem).hide();
         };
 
+        var updateMessage = function() {
+            if (keepChanging) 
+                $("#messages").html("<p>Press any key to <b>STOP</b> news rotation...</p>");
+            else
+                $("#messages").html("<p>Press any key to <b>START</b> news rotation...</p>");
+        };
+
+        var update = function() {
+            if (keepChanging) {
+                var oldId = curId;
+
+                curId = curId + 1;
+                if (curId > maxId)
+                    curId = 1;
+
+                setSelectedId(oldId, curId);
+                console.log(curId + " " + oldId + " " + maxId);
+            }
+        };
+
+        function updateMessage() {
+            if (keepChanging) 
+                $("#messages").html("<p>Press any key to <b>STOP</b> news rotation...</p>");
+            else
+                $("#messages").html("<p>Press any key to <b>START</b> news rotation...</p>");
+        }
+
+        function update() {
+            if (keepChanging) {
+                var oldId = curId;
+
+                curId = curId + 1;
+                if (curId > maxId)
+                    curId = 1;
+
+                setSelectedId(oldId, curId);
+                console.log(curId + " " + oldId + " " + maxId);
+            }
+        }
+
         // main code
         $(".entry").each(function(idx, elem) {
                 idx++;
@@ -44,22 +84,13 @@
             maxId = idx;
         });
 
-        function update() {
-            if (keepChanging) {
-                var oldId = curId;
-
-                curId = curId + 1;
-                if (curId > maxId)
-                    curId = 1;
-
-                setSelectedId(oldId, curId);
-                console.log(curId + " " + oldId + " " + maxId);
-            }
-        }
-
         setInterval(update, 1000 * changeTimeout);
 
+        updateMessage();
+
         $(document).keydown(function(e) {
+            // XXX: right now we do not need to know which key the user decided
+            // to press, may be useful in the future
             var key = 0;
             if (e == null)
                 key = event.keyCode;
@@ -68,6 +99,8 @@
                 key = e.which;
 
             keepChanging = !keepChanging;
+
+            updateMessage();
         });
 
         return this;

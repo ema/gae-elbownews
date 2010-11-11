@@ -20,7 +20,7 @@ def index(request):
         for entry in __get_entries(uri):
             entries.append(entry)
 
-    entries.sort(cmp=lambda x, y: cmp(x['date'], y['date']))
+    entries.sort(cmp=lambda x, y: cmp(y['date'], x['date']))
     return render_to_response("main.html", locals())
 
 def __get_entries(feed_uri):
@@ -35,7 +35,7 @@ def __get_entries(feed_uri):
             'source': channels.feed.title,
         }
 
-        logging.info(str(entry.keys()))
+        #logging.info(str(entry.keys()))
 
         try:
             entry_dict['date'] = datetime.fromtimestamp(time.mktime(
